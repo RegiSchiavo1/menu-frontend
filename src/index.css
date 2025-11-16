@@ -1,0 +1,38 @@
+:root {
+  /* ❗ Nota: Las variables de color primarias las maneja src/theme.js ahora. */
+  
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* <body> ajustado para ocupar el 100% del viewport */
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Estilos básicos de elementos */
+a {
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* Eliminar estilos de botones base aquí, Material UI los manejará mejor */
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Media queries para modo claro (ya lo maneja CssBaseline y ThemeProvider, pero lo dejamos por si acaso) */
+@media (prefers-color-scheme: light) {
+  /* No se necesitan ajustes aquí si usamos ThemeProvider */
+}
