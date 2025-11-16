@@ -1,129 +1,155 @@
-import { Typography, Box, Button, useTheme } from "@mui/material";
+import { Typography, Box, Button, useTheme, IconButton, useMediaQuery } from "@mui/material";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { loginGuest, loginHost } from "../utils/auth";
-import { login } from "../services/api";
+import { loginGuest } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import Img1 from "../assets/images/1.png";
+import Img2 from "../assets/images/2.png";
+import Img3 from "../assets/images/3.png";
+import Img4 from "../assets/images/4.png";
+import Img5 from "../assets/images/5.png";
+
+const carouselImages = [Img1, Img2, Img3, Img4, Img5];
 
 export default function Home() {
   const nav = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  function handleGuest() {
-    loginGuest();
-    Swal.fire({
-      title: "Modo invitado activado",
-      text: "Podés ver el menú",
-      icon: "success",
-      confirmButtonText: "OK",
-      background: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      confirmButtonColor: theme.palette.primary.main,
-    });
-    nav("/restaurants");
-  }
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  async function handleHost() {
-    const { value: formValues } = await Swal.fire({
-      title: "Iniciar sesión como HOST",
-      html: `
-        <input id="swal-email" class="swal2-input" placeholder="Email">
-        <input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">
-      `,
-      focusConfirm: false,
-      preConfirm: () => ({
-        email: document.getElementById("swal-email").value,
-        passwordHash: document.getElementById("swal-pass").value
-      }),
-      background: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      confirmButtonColor: theme.palette.primary.main,
-    });
+  const handleNext = () =>
+    setActiveIndex((i) => (i + 1) % carouselImages.length);
 
-    if (!formValues) return;
+  const handlePrev = () =>
+    setActiveIndex((i) => (i - 1 + carouselImages.length) % carouselImages.length);
 
-    try {
-      const token = await login(formValues);
-      loginHost(token);
-      Swal.fire({
-        title: "Bienvenido!",
-        text: "Inicio de sesión exitoso",
-        icon: "success",
-      });
-      nav("/restaurants");
-    } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Credenciales incorrectas",
-        icon: "error",
-      });
-    }
-  }
+  useEffect(() => {
+    const interval = setInterval(handleNext, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Box
       sx={{
+        width: "100vw",
         height: "calc(100vh - 64px)",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        ml: 10,
-        color: "white",
+        flexDirection: isMobile ? "column" : "row",
+        overflow: "hidden",
+        backgroundColor: "#0f1b2b", // color de fondo global
       }}
     >
-      {/* TÍTULO PREMIUM */}
-      <Typography
-        variant="h1"
+
+      {/* ==================== IZQUIERDA (Texto) ==================== */}
+      <Box
         sx={{
-          fontFamily: `"DM Serif Text", serif`,
-          fontSize: "3.2rem",
-          maxWidth: "600px",
-          lineHeight: 1.2,
-          mb: 3,
+          width: isMobile ? "100%" : "50%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: isMobile ? 4 : 8,
+          color: "white",
+          backgroundColor: "#0f1b2b", // azul elegante
         }}
       >
-        Explora Menús, Descubrí Sabores Únicos.
-      </Typography>
+        <Typography
+          sx={{
+            fontFamily: `"DM Serif Text", serif`,
+            fontSize: isMobile ? "2rem" : "3.2rem",
+            lineHeight: 1.2,
+            maxWidth: "500px",
+            mb: 3,
+          }}
+        >
+          Explora Menús, Descubrí Sabores Únicos.
+        </Typography>
 
-      {/* SUBTÍTULO */}
-      <Typography
-        variant="body1"
-        sx={{
-          maxWidth: "460px",
-          fontSize: "1.2rem",
-          color: theme.palette.text.secondary,
-          mb: 5,
-        }}
-      >
-        Tu próxima experiencia gastronómica, a un clic de distancia.
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: "1.1rem",
+            maxWidth: "450px",
+            mb: 4,
+            color: "#e4e4e4",
+          }}
+        >
+          Tu próxima experiencia gastronómica, a un clic de distancia.
+        </Typography>
 
-      {/* BOTONES PRINCIPALES */}
-      <Box sx={{ display: "flex", gap: 3 }}>
-        <Button variant="contained" size="large" onClick={() => nav("/restaurants")}>
+        {/* --- BOTONES SIMPLES --- */}
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            width: "220px",
+            mb: 2,
+            backgroundColor: "#1e4f8e",
+          }}
+          onClick={() => nav("/restaurants")}
+        >
           Ver Restaurantes
         </Button>
 
-        <Button variant="outlined" size="large" onClick={() => nav("/products")}>
-          Explorar Productos
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={handleHost}
-        >
-          Iniciar Sesión 🔐
-        </Button>
+    
       </Box>
 
-      {/* BOTÓN INVITADO (opcional dejar abajo) */}
-      <Box sx={{ mt: 4 }}>
-        <Button variant="text" sx={{ color: "#E0E1DD" }} onClick={handleGuest}>
-          Continuar como Invitado 👤
-        </Button>
-      </Box>
+      {/* ==================== DERECHA (Carrusel) ==================== */}
+      <Box
+        sx={{
+          width: isMobile ? "100%" : "50%",
+          height: "100%",
+          backgroundImage: `url(${carouselImages[activeIndex]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          position: "relative",
+          transition: "background-image 0.5s ease-in-out",
+        }}
+      />
+
+      {/* ==================== Controles ==================== */}
+      {!isMobile && (
+        <>
+          <IconButton
+            onClick={handlePrev}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "2%",
+              transform: "translateY(-50%)",
+              color: "white",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              "&:hover": { backgroundColor: "rgba(0,0,0,0.8)" },
+            }}
+          >
+            <ArrowBackIosNewIcon />
+          </IconButton>
+
+          <IconButton
+            onClick={handleNext}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              right: "2%",
+              transform: "translateY(-50%)",
+              color: "white",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              "&:hover": { backgroundColor: "rgba(0,0,0,0.8)" },
+            }}
+          >
+            <ArrowForwardIosIcon />
+          </IconButton>
+        </>
+      )}
     </Box>
   );
 }
+
+
+
+
+
 
