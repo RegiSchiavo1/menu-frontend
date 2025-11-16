@@ -131,7 +131,7 @@ export default function Products() {
       {/* ================================================== */}
       <Box sx={{ mb: 5, p: 3, border: '1px solid #ccc', borderRadius: 2, background: '#f9f9f9' }}>
         
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 ,color: '#000000ff' }}>
           Buscar Restaurantes por Producto
         </Typography>
 
@@ -139,6 +139,7 @@ export default function Products() {
           <Grid item xs={12} sm={8}>
             <TextField 
               label="Nombre del Producto" 
+              slotProps={{inputLabel:{style:{color: '#000'}},input: { sx: { color: "#000" } }}}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               fullWidth
@@ -166,10 +167,10 @@ export default function Products() {
         {/* Resultados */}
         {!searchLoading && foundRestaurants.length > 0 && (
           <Box sx={{ mt: 2, p: 2, borderTop: '1px dashed #ddd' }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' , color: '#000' }}>
               Disponible en:
             </Typography>
-            <Typography>
+            <Typography color="#000"> 
               {foundRestaurants.map(r => r.restaurantName).join(' • ')}
             </Typography>
           </Box>
@@ -184,7 +185,7 @@ export default function Products() {
       {/* ================================================== */}
       <Box sx={{ mb: 5, p: 3, border: '1px solid #ccc', borderRadius: 2, background: '#f0f8ff' }}>
 
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 ,color: '#000000ff' }}>
           Buscar Productos por Restaurante y Categoría
         </Typography>
 
@@ -193,6 +194,7 @@ export default function Products() {
           <Grid item xs={12} sm={6}>
             <TextField
               label="Nombre del Restaurante"
+              slotProps={{inputLabel:{style:{color: '#000'}},input: { sx: { color: "#000" } }}}
               fullWidth
               value={restaurantInput}
               onChange={(e) => setRestaurantInput(e.target.value)}
@@ -203,6 +205,7 @@ export default function Products() {
           <Grid item xs={12} sm={6}>
             <TextField
               label="Nombre de la Categoría"
+              slotProps={{inputLabel:{style:{color: '#000'}},input: { sx: { color: "#000" } }}}
               fullWidth
               value={categoryInput}
               onChange={(e) => setCategoryInput(e.target.value)}
@@ -234,7 +237,7 @@ export default function Products() {
         {/* Resultados */}
         {!filterLoading && filteredProducts.length > 0 && (
           <Box sx={{ mt: 3 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 , color: '#000'}}>
               Productos encontrados:
             </Typography>
 

@@ -58,7 +58,7 @@ export default function RestaurantMenu() {
           </Typography>
 
           {category.products?.length === 0 ? (
-            <Typography color="text.secondary">
+            <Typography color="">
               No hay productos en esta categoría.
             </Typography>
           ) : (
@@ -69,7 +69,7 @@ export default function RestaurantMenu() {
                   p: 2,
                   mb: 2,
                   borderRadius: 2,
-                  background: "#fafafa",
+                  background: "none",
                   boxShadow: 1
                 }}
               >

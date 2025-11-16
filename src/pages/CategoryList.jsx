@@ -106,10 +106,23 @@ export default function CategoryList() {
                   divider 
                   sx={{ background: host ? '#f5f5f5' : 'transparent', borderRadius: 1 }}
               >
-                <ListItemText 
-                    primary={c.name} 
-                    secondary={`ID: ${c.categoryId}`} 
-                />
+<ListItemText
+  primary={c.name}
+  secondary={`ID: ${c.categoryId}`}
+  slotProps={{
+    primary: {
+      sx: { 
+        color: "#000",
+        fontWeight: 600
+      }
+    },
+    secondary: {
+      sx: { 
+        color: "#777"
+      }
+    }
+  }}
+/>
                 
                 {/* 🔒 ACCIONES DE HOST */}
                 {host && (

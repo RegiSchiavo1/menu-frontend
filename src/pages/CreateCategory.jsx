@@ -59,7 +59,7 @@ export default function CreateCategory() {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <Typography variant="h4" sx={{ mb: 2,  }}>
         Crear Nueva Categoría
       </Typography>
 
