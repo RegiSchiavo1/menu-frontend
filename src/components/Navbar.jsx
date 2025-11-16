@@ -61,8 +61,27 @@ export default function Navbar() {
     nav("/");
   }
 
+  const linkHover = {
+    transition: "0.3s",
+    paddingX: 1.5,
+    paddingY: 0.5,
+    borderRadius: "8px",
+    "&:hover": {
+      backgroundColor: "rgba(255,255,255,0.12)",
+      backdropFilter: "blur(6px)",
+    }
+  };
+
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        backgroundColor: "#0f1b2b",
+        backdropFilter: "blur(8px)",
+        borderBottom: "1px solid rgba(255,255,255,0.05)"
+      }}
+    >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
 
         {/* LOGO */}
@@ -74,42 +93,55 @@ export default function Navbar() {
             fontSize: "1.6rem",
             color: "white",
             textDecoration: "none",
+            transition: "0.3s",
+            "&:hover": { color: "#bcd7ff" }
           }}
         >
           Menu Digital
         </Box>
 
-        <Box sx={{ display: "flex", gap: 3 }}>
+        {/* LINKS */}
+        <Box sx={{ display: "flex", gap: 2 }}>
 
-          <Button color="inherit" component={Link} to="/">Home</Button>
-          <Button color="inherit" component={Link} to="/restaurants">Restaurantes</Button>
-          <Button color="inherit" component={Link} to="/products">Productos</Button>
+          <Button component={Link} to="/" color="inherit" sx={linkHover}>
+            Home
+          </Button>
 
-          {/* SI NO ESTA LOGUEADO → ICONO DEL LOGIN */}
+          <Button component={Link} to="/restaurants" color="inherit" sx={linkHover}>
+            Restaurantes
+          </Button>
+
+          <Button component={Link} to="/products" color="inherit" sx={linkHover}>
+            Productos
+          </Button>
+
+          {/* ICONO LOGIN */}
           {!token && (
-            <IconButton color="inherit" onClick={handleHostLogin}>
-              <AccountCircleIcon sx={{ fontSize: 32 }} />
+            <IconButton color="inherit" onClick={handleHostLogin} sx={linkHover}>
+              <AccountCircleIcon sx={{ fontSize: 30 }} />
             </IconButton>
           )}
 
-          {/* SI ES HOST → MENU ADMIN */}
+          {/* MENU ADMIN */}
           {host && (
             <>
-              <Button color="inherit" component={Link} to="/restaurants/create">
+              <Button component={Link} to="/restaurants/create" color="inherit" sx={linkHover}>
                 Crear Restaurante
               </Button>
-              <Button color="inherit" component={Link} to="/restaurants/delete">
+
+              <Button component={Link} to="/restaurants/delete" color="inherit" sx={linkHover}>
                 Eliminar Restaurante
               </Button>
-              <Button color="inherit" component={Link} to="/categories">
+
+              <Button component={Link} to="/categories" color="inherit" sx={linkHover}>
                 Categorías
               </Button>
-              <Button color="inherit" component={Link} to="/products/adjust-prices">
+
+              <Button component={Link} to="/products/adjust-prices" color="inherit" sx={linkHover}>
                 Ajuste de Precios
               </Button>
 
-              {/* LOGOUT */}
-              <Button color="inherit" onClick={handleLogout}>
+              <Button color="inherit" onClick={handleLogout} sx={linkHover}>
                 Cerrar Sesión
               </Button>
             </>
@@ -119,6 +151,7 @@ export default function Navbar() {
     </AppBar>
   );
 }
+
 
 
 

@@ -10,19 +10,34 @@ export default function Restaurants() {
     api
       .get("/restaurant")
       .then((res) => {
-        console.log("DATA RESTAURANTS:", res.data);
         setRestaurants(res.data);
       })
       .catch((error) => console.error("Error cargando restaurantes:", error));
   }, []);
 
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold" }}>
+    <Box
+      sx={{
+        padding: 4,
+        minHeight: "100vh",
+        backgroundColor: "#0f1b2b",
+        color: "white",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          mb: 4,
+          fontWeight: "bold",
+          fontFamily: `"DM Serif Text", serif`,
+          fontSize: "2.6rem",
+          letterSpacing: "1px",
+        }}
+      >
         Restaurantes
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         {restaurants.map((r) => (
           <Grid item xs={12} sm={6} md={4} key={r.id}>
             <RestaurantCard restaurant={r} />
@@ -32,6 +47,8 @@ export default function Restaurants() {
     </Box>
   );
 }
+
+
 
 
 
